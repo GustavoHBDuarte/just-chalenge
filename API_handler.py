@@ -4,13 +4,12 @@ import pandas as pd
 import pickle
 from flask import Flask, request, Response
 import json
-import os
 from Data_prep_class.Data_prep import Data_prep
 
 
 
 # Loading model
-model = pickle.load(open('model/linear_regression_model.pkl', 'rb')) # Opening scaler
+model = pickle.load(open('linear_regression_model.pkl', 'rb')) # Opening scaler
 
 
 # initialize API
@@ -29,7 +28,7 @@ def netrevenueforecaster_predict():
     
    
     if test_json: # there is data
-        #test_json = json.loads(test_json)
+        test_json = json.loads(test_json)
         
         if isinstance( test_json, dict ): #test if the data is a request of only 1 row (will come as dict)
             test_raw = pd.DataFrame( test_json, index=[0] )
@@ -59,6 +58,5 @@ def netrevenueforecaster_predict():
     
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host= '0.0.0.0', port=port, debug=False )
+    app.run( '0.0.0.0' )
     #      (local host)    
